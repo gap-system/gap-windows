@@ -75,7 +75,7 @@ tools/subcyg "${ENV_BUILD_DIR}" "cd ${GAP_ROOT} && ./configure"
 echo "::endgroup::"
 
 echo "::group::make"
-tools/subcyg "${ENV_BUILD_DIR}" "cd ${GAP_ROOT} && make -j2"
+tools/subcyg "${ENV_BUILD_DIR}" "cd ${GAP_ROOT} && make -j4"
 echo "::endgroup::"
 
 # get GAP packages (if not already present)
