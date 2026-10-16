@@ -2,6 +2,7 @@
 .*.sw[po]
 
 # Directories created during the build, containing build artifacts
+ccache
 dist
 download
 envs

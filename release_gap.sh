@@ -40,6 +40,23 @@ download/setup-x86_64.exe --site ${CYGWIN_MIRROR} \
 if [ -x envs/build-${GAP_VERSION}-x86_64/usr/bin/ccache ]; then
     ln -s /usr/bin/ccache envs/build-${GAP_VERSION}-x86_64/usr/local/bin/gcc
     ln -s /usr/bin/ccache envs/build-${GAP_VERSION}-x86_64/usr/local/bin/g++
+
+    # The cache lives outside the build env, whose path contains the GAP
+    # version, so that CI can keep it across builds. subcyg clears the
+    # environment, hence a profile script; it receives a Windows path because
+    # a POSIX path means something else in the build env's Cygwin.
+    # CCACHE_BASEDIR makes the versioned paths below /opt relative, and the
+    # compiler is reinstalled for every build, so check its content, not its
+    # mtime.
+    mkdir -p ccache
+    cat > envs/build-${GAP_VERSION}-x86_64/etc/profile.d/ccache.sh <<EOF
+export CCACHE_DIR="\$(cygpath -u '$(cygpath -w -a ccache)')"
+export CCACHE_BASEDIR=/opt
+export CCACHE_COMPILERCHECK=content
+export CCACHE_COMPRESS=1
+EOF
+    tools/subcyg "${ENV_BUILD_DIR}" "ccache -M 2G && ccache -z"
+    USE_CCACHE=yes
 fi
 # A bit of cleanup
 rm -f envs/build-${GAP_VERSION}-x86_64/Cygwin*.{bat,ico}
@@ -88,6 +105,12 @@ echo "::endgroup::"
 echo "::group::Build Packages"
 tools/subcyg "${ENV_BUILD_DIR}" "cd ${GAP_ROOT}/pkg && (../bin/BuildPackages.sh --parallel || true)"
 echo "::endgroup::"
+
+if [ "${USE_CCACHE}" = yes ]; then
+    echo "::group::ccache statistics"
+    tools/subcyg "${ENV_BUILD_DIR}" "ccache -s"
+    echo "::endgroup::"
+fi
 
 # gap-prep-runtime
 echo "::group::gap-prep-runtime"
