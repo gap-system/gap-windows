@@ -37,7 +37,9 @@ download/setup-x86_64.exe --site ${CYGWIN_MIRROR} \
     --arch x86_64 --no-admin --no-shortcuts --quiet-mode
 
 # Install symlinks for CCACHE
-if [ -x envs/build-${GAP_VERSION}-x86_64/usr/bin/ccache ]; then
+# (test the real file name: `-x .../ccache` fails from the host Cygwin)
+if [ -f envs/build-${GAP_VERSION}-x86_64/usr/bin/ccache.exe ]; then
+    mkdir -p envs/build-${GAP_VERSION}-x86_64/usr/local/bin
     ln -s /usr/bin/ccache envs/build-${GAP_VERSION}-x86_64/usr/local/bin/gcc
     ln -s /usr/bin/ccache envs/build-${GAP_VERSION}-x86_64/usr/local/bin/g++
 
