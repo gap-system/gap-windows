@@ -53,7 +53,7 @@ pid=$!
 # sometimes there can be a delay.
 sleep 1
 if [ -f "$subcyg_root$outtmp" ]; then
-    tail -F --pid=$pid "$subcyg_root$outtmp" 2>/dev/null
+    tail -n +1 -F --pid=$pid "$subcyg_root$outtmp" 2>/dev/null
     if [ $? -eq 130 ]; then
         # tail was interrupted by Ctrl-C, so treat this as though the
         # wrapped command were terminated as well.
