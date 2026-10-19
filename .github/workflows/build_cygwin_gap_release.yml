@@ -53,4 +53,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: GAP Windows installer - ${{ matrix.arch }}
-        path: Output/*
+        path: gap-windows/dist/*
+        if-no-files-found: error

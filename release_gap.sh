@@ -92,7 +92,9 @@ echo "::endgroup::"
 # gap-prep-runtime
 echo "::group::gap-prep-runtime"
 mkdir -p $(dirname ${GAP_ROOT_RUNTIME})
-cp -rp ${GAP_ROOT_BUILD} $(dirname ${GAP_ROOT_RUNTIME})
+# Not -p: Cygwin cannot copy the ACLs of directories checked out by
+# Windows git, and the installer does not keep them anyway
+cp -r ${GAP_ROOT_BUILD} $(dirname ${GAP_ROOT_RUNTIME})
 # Prepare / compactify runtime environment
 tools/gap-prep-runtime "${GAP_ROOT_RUNTIME}" "${GAP_ROOT}"
 echo "::endgroup::"
