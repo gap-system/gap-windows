@@ -3,7 +3,7 @@
 
 # Directories created during the build, containing build artifacts
 ccache
-dist
+Output
 download
 envs
 .stamps

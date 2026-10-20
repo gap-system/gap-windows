@@ -148,7 +148,6 @@ echo "::endgroup::"
 
 # ISCC
 echo "::group::ISCC"
-mkdir -p dist
 #cd ${CUDIR}
 "${ISCC}" /DGapVersion=${GAP_VERSION} /DGapArch=x86_64 /Q gap.iss
 echo "::endgroup::"
