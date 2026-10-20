@@ -3,6 +3,8 @@ name: GAP Windows release
 # Based on https://github.com/mit-plv/fiat-crypto/blob/master/.github/workflows/coq-windows.yml
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 env:
