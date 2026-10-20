@@ -29,7 +29,7 @@
 #define GapGroupName MyAppName + "-" + MyAppVersion
 
 #define EnvsDir "envs"
-#define OutputDir "dist"
+#define OutputDir "Output"
 
 #define Source      EnvsDir + "\runtime-" + GapVersion + "-" + GapArch
 
