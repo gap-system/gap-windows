@@ -26,18 +26,18 @@ jobs:
 
     # clone GAP repository
     # TODO: should instead create or download a recent release snapshot tarball
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
         repository: gap-system/gap
         path: gap-${{ matrix.gapbranch }}
         ref: ${{ matrix.gapbranch }}
 
     # clone the gap-windows repository
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
         path: gap-windows
 
-    - uses: gap-actions/setup-cygwin@v1
+    - uses: gap-actions/setup-cygwin@v2
 
     - name: Compile GAP and download packages
       shell: C:\cygwin64\bin\bash.exe --login --norc -o igncr '{0}'
@@ -50,7 +50,7 @@ jobs:
         GAP_VERSION: ${{ matrix.gapbranch }}
 
     - name: Upload release
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: GAP Windows installer - ${{ matrix.arch }}
         path: gap-windows/dist/*
