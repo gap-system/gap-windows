@@ -1,5 +1,6 @@
 autoconf
 automake
+ccache
 cddlib-devel
 gcc-core
 gcc-core
